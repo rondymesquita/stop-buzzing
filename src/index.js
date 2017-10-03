@@ -6,27 +6,36 @@ import {
   Image,
   TouchableHighlight
 } from 'react-native';
-import Sound from 'react-native-sound';
+import SoundPlayer from 'react-native-sound-player';
 
 export default class StopBuzzing extends Component{
-  _onPressBell(){
-    
+
+  constructor(props) {
+    super(props);
   }
 
-	render(){
-		return(
-			<View style={styles.container}>
-				<Text style={styles.title}>
-				  Stop Buzzing
-				</Text>
-        <TouchableHighlight style={styles.bellCircle} onPress={this._onPressBell} underlayColor="#ffdd00">
-  					<Image 
-              style={styles.bell}
-              source={require('./res/bell-icon.png')}/>
-        </TouchableHighlight>
-			</View>
-		);
-	}
+  _onPressBell(){
+    try {
+      SoundPlayer.playSoundFile('bell', 'mp3');
+    } catch (e) {
+      console.warn('cannot play the sound file', e);
+    }
+  }
+
+  render(){
+    return(
+           <View style={styles.container}>
+           <Text style={styles.title}>
+           Stop Buzzing
+           </Text>
+           <TouchableHighlight style={styles.bellCircle} onPress={this._onPressBell} underlayColor="#ffdd00">
+           <Image 
+           style={styles.bell}
+           source={require('./res/bell-icon.png')}/>
+           </TouchableHighlight>
+           </View>
+           );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -47,10 +56,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-  	width: 180,
-  	height: 180,
-  	borderRadius: 90,
-  	backgroundColor: '#D95141',
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: '#D95141',
   },
   bell: {
     width: 120,
